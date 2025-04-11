@@ -2,6 +2,8 @@ import express from "express"; // hacer npm i express
 
 import cors from "cors"; // hacer npm i cors
 
+import Alumno from "./models/Alumno.js";
+
 import { sumar, restar, multiplicar, dividir } from "./modules/matematica.js";
 
 import {
@@ -74,21 +76,52 @@ app.get("/omdb/searchbypage", async (req, res) => {
 });
 
 app.get("/omdb/searchbypage", async (req, res) => {
-    const resultado = await OMDBSearchComplete(req.query.search);
-  
-    res.status(200).send(resultado);
-  });
+  const resultado = await OMDBSearchComplete(req.query.search);
+
+  res.status(200).send(resultado);
+});
 
 app.get("/omdb/searchbypage", async (req, res) => {
-    const resultado = await OMDBSearchComplete(req.query.search);
-  
-    res.status(200).send(resultado);
+  const resultado = await OMDBGetByImdbID(req.query.imdbID);
+
+  res.status(200).send(resultado);
 });
-//
+
+app.get("/alumnos", (req, res) => {
+  const alumnosArray = [];
+
+  alumnosArray.push(new Alumno("Esteban Dido", "22888444", 20));
+
+  alumnosArray.push(new Alumno("Matias Queroso", "28946255", 51));
+
+  alumnosArray.push(new Alumno("Elba Calao", "32623391", 18));
+
+  res.status(200).send(alumnosArray);
+});
+
+app.get("/alumnos/:dni", (req, res) => {
+  let alumnoBuscado;
+  const alumnosArray = [];
+
+  alumnosArray.push(new Alumno("Esteban Dido", "22888444", 20));
+
+  alumnosArray.push(new Alumno("Matias Queroso", "28946255", 51));
+
+  alumnosArray.push(new Alumno("Elba Calao", "32623391", 18));
+
+  alumnoBuscado = alumnosArray.find((element) => element.DNI == req.params.dni);
+  console.log(alumnoBuscado);
+  if(alumnoBuscado)
+  res.status(200).send(alumnoBuscado)
+    else
+  res.status(400);
+});
+
+app.post("/alumnos/", (req, res) => {
+
+});
 
 // Inicio el Server y lo pongo a escuchar.
-
-//
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}/`);
