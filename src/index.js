@@ -15,23 +15,27 @@ app.use(cors());         // Middleware de CORS
 app.use(express.json()); // Middleware para parsear y comprender JSON
 
 
-app.get('/', (req, res) => {                // EndPoint "/"
+app.get('/', (req, res) => {                
 
-    res.send('¡Ya estoy respondiendo!');
-
-})
-
-app.get('/saludar/:nombre', (req, res) => {                // EndPoint "/"
-
-    res.send('Tu nombre es ' + req.params.nombre);
+    res.status(200).send('¡Ya estoy respondiendo!');
 
 })
 
+app.get('/saludar/:nombre', (req, res) => {               
 
-app.get('/validarfecha/:ano/:mes/:dia', (req, res) => {             // EndPoint "/saludar"
+    res.status(200).send('Tu nombre es ' + req.params.nombre);
 
-    
-    res.send('Hello World! ' + req.query.nombre);
+})
+
+
+app.get('/validarfecha/:ano/:mes/:dia', (req, res) => {            
+
+    let fechaValidar = Date.parse(req.params.mes + req.params.dia + ", " + req.params.ano);
+    if(fechaValidar != isNaN){
+        res.status(200).send('Hello World! ' + req.query.nombre);
+    }
+    else
+    res.status(400)
 
 })
 
