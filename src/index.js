@@ -133,8 +133,27 @@ app.post("/alumnos", (req, res) => {
     mensaje : 'Alumno creado con exito',
     alumno : nuevoAlumno 
   })
+});
 
+app.delete("/alumnos", (req, res) => {
+  const alumnosArray = [];
+  alumnosArray.push(new Alumno("Esteban Dido", "22888444", 20));
+  alumnosArray.push(new Alumno("Matias Queroso", "28946255", 51));
+  alumnosArray.push(new Alumno("Elba Calao", "32623391", 18));
   
+  const { dni } = req.body; 
+  const dniBuscado = alumnosArray.findIndex(dni => dni == {dni})
+  if(dniBuscado == -1)
+  {
+    res.status(404)
+  }
+  else{
+    const arrayModificado = alumnosArray.splice(dniBuscado, 1)
+    res.status(200)
+  }
+  alumnosArray = alumnosArray.filter(alumno => alumno.DNI !== dni);
+  
+
 });
 // Inicio el Server y lo pongo a escuchar.
 
