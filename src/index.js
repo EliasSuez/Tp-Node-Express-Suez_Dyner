@@ -117,10 +117,25 @@ app.get("/alumnos/:dni", (req, res) => {
   res.status(400);
 });
 
-app.post("/alumnos/", (req, res) => {
+app.post("/alumnos", (req, res) => {
+  const alumnosArray = [];
+  alumnosArray.push(new Alumno("Esteban Dido", "22888444", 20));
+  alumnosArray.push(new Alumno("Matias Queroso", "28946255", 51));
+  alumnosArray.push(new Alumno("Elba Calao", "32623391", 18));
 
+  const {username, dni, edad} = req.body
+
+  const nuevoAlumno = {username, dni, edad}
+
+  alumnosArray.push(nuevoAlumno)
+
+  res.status(201).json({
+    mensaje : 'Alumno creado con exito',
+    alumno : nuevoAlumno 
+  })
+
+  
 });
-
 // Inicio el Server y lo pongo a escuchar.
 
 app.listen(port, () => {
